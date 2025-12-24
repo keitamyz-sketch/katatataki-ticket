@@ -3,9 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>肩たたき券</title>
+<style>
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 60px;
+}
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+}
+</style>
 </head>
 <body>
-<h1>🎄 肩たたき券（未使用）</h1>
-<p>この券は1回限り有効です</p>
+
+<h1 id="status"></h1>
+<p>🎄 クリスマス限定・1回限り有効 🎄</p>
+
+<button onclick="useTicket()">使う</button>
+
+<script>
+const key = "katatataki_used";
+
+function update() {
+  const used = localStorage.getItem(key);
+  document.getElementById("status").innerText =
+    used ? "❌ 使用済み（もう一回はダメだよ）"
+         : "🎁 肩たたき券（未使用）";
+}
+
+function useTicket() {
+  localStorage.setItem(key, "true");
+  update();
+}
+
+update();
+</script>
+
 </body>
 </html>
+
