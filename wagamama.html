@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>わがまま聞いて券</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: linear-gradient(180deg, #4b2c5e, #7a4a8f);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    .ticket {
+      background: #fffafc;
+      border: 3px dashed #d16ba5;
+      border-radius: 18px;
+      padding: 26px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .ticket::before {
+      content: "🎄";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+    }
+    h1 {
+      color: #d16ba5;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .date {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .unused {
+      color: #27ae60;
+    }
+    .used {
+      color: #c0392b;
+    }
+    .content {
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .note {
+      font-size: 14px;
+      color: #777;
+      margin-top: 10px;
+    }
+    .thanks {
+      font-size: 18px;
+      color: #d16ba5;
+      margin-top: 15px;
+      display: none;
+    }
+    button {
+      background: linear-gradient(90deg, #d16ba5, #f08bb4);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #bbb;
+      cursor: default;
+    }
+    .footer {
+      font-size: 14px;
+      color: #555;
+      margin-top: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticket">
+    <h1>💌 わがまま聞いて券 💌</h1>
+
+    <div class="date">🎄 2025 / 12 / 25 🎄</div>
+
+    <div id="status" class="status unused">● 未使用</div>
+
+    <div class="content">
+      このチケットを使うと、<br>
+      <strong>あなたのわがままを、ひとつ聞きます。</strong><br><br>
+
+      小さなお願いでも、<br>
+      ちょっとした甘えでもOK。<br>
+      無理のない範囲で、全力で応えます。
+    </div>
+
+    <div class="note">
+      ※ 内容はやさしく相談しながら決めようね
+    </div>
+
+    <div id="thanksMessage" class="thanks">
+      いつも素直に気持ちを伝えてくれてありがとう💖<br>
+      メリークリスマス 🎄
+    </div>
+
+    <button id="useButton">このチケットを使う</button>
+
+    <div class="footer">
+      有効期限：なし<br>
+      使用回数：1回<br><br>
+      from 恵大
+    </div>
+  </div>
+
+  <script>
+    const status = document.getElementById("status");
+    const button = document.getElementById("useButton");
+    const thanks = document.getElementById("thanksMessage");
+
+    const isUsed = localStorage.getItem("request_ticket_used");
+
+    if (isUsed === "true") {
+      markUsed();
+    }
+
+    button.addEventListener("click", () => {
+      if (confirm("このチケットを使用済みにしますか？")) {
+        localStorage.setItem("request_ticket_used", "true");
+        markUsed();
+      }
+    });
+
+    function markUsed() {
+      status.textContent = "● 使用済み";
+      status.classList.remove("unused");
+      status.classList.add("used");
+      button.disabled = true;
+      button.textContent = "使用済みです";
+      thanks.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
