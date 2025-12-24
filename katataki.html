@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>肩たたき券</title>
+<style>
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    text-align: center;
+    background: #fff7f7;
+    padding: 40px;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 16px;
+    margin: 8px 0;
+  }
+  .status {
+    font-size: 22px;
+    margin: 20px 0;
+  }
+  button {
+    font-size: 18px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 24px;
+    background: #ff6b6b;
+    color: white;
+    cursor: pointer;
+  }
+  button:disabled {
+    background: #aaa;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🎁 優紀専用 肩たたき券</h1>
+
+  <p>つかれたときに、いつでも使ってね</p>
+  <p>※1回限り有効</p>
+
+  <div class="status" id="status"></div>
+
+  <button id="useBtn" onclick="useTicket()">使う</button>
+</div>
+
+<script>
+const KEY = "katatataki_used_yuki";
+
+function updateStatus() {
+  const used = localStorage.getItem(KEY);
+  const status = document.getElementById("status");
+  const btn = document.getElementById("useBtn");
+
+  if (used) {
+    status.textContent = "❌ 使用済み";
+    btn.disabled = true;
+    btn.textContent = "使用済み";
+  } else {
+    status.textContent = "⭕ 未使用";
+    btn.disabled = false;
+    btn.textContent = "使う";
+  }
+}
+
+function useTicket() {
+  localStorage.setItem(KEY, "true");
+  updateStatus();
+}
+
+updateStatus();
+</script>
+
+</body>
+</html>
