@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手料理ごちそうします券</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: #fff7f0;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    .ticket {
+      background: #ffffff;
+      border: 2px dashed #ff9a8b;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #ff6f61;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .date {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .unused {
+      color: #2ecc71;
+    }
+    .used {
+      color: #e74c3c;
+    }
+    .content {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .thanks {
+      font-size: 18px;
+      color: #ff6f61;
+      margin-top: 15px;
+      display: none;
+    }
+    button {
+      background: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: default;
+    }
+    .footer {
+      font-size: 14px;
+      color: #555;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticket">
+    <h1>🍳 手料理ごちそうします券 🍳</h1>
+
+    <div class="date">日付：2025 / 12 / 25</div>
+
+    <div id="status" class="status unused">● 未使用</div>
+
+    <div class="content">
+      このチケットを使うと、<br>
+      <strong>あなたのために心をこめて料理を作ります。</strong><br><br>
+      メニューは相談しながら決めようね。
+    </div>
+
+    <div id="thanksMessage" class="thanks">
+      いつも作ってくれてありがとう💖
+    </div>
+
+    <button id="useButton">このチケットを使う</button>
+
+    <div class="footer">
+      有効期限：なし<br>
+      使用回数：1回<br><br>
+      from ○○
+    </div>
+  </div>
+
+  <script>
+    const status = document.getElementById("status");
+    const button = document.getElementById("useButton");
+    const thanks = document.getElementById("thanksMessage");
+
+    const isUsed = localStorage.getItem("cooking_ticket_used");
+
+    if (isUsed === "true") {
+      markUsed();
+    }
+
+    button.addEventListener("click", () => {
+      if (confirm("このチケットを使用済みにしますか？")) {
+        localStorage.setItem("cooking_ticket_used", "true");
+        markUsed();
+      }
+    });
+
+    function markUsed() {
+      status.textContent = "● 使用済み";
+      status.classList.remove("unused");
+      status.classList.add("used");
+      button.disabled = true;
+      button.textContent = "使用済みです";
+      thanks.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
