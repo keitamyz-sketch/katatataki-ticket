@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シールいっぱい買う権</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: linear-gradient(180deg, #0b3d2e, #145a32);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    .ticket {
+      background: #fffaf3;
+      border: 3px dashed #c0392b;
+      border-radius: 18px;
+      padding: 26px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .ticket::before {
+      content: "🎄";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+    }
+    h1 {
+      color: #c0392b;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .date {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .unused {
+      color: #27ae60;
+    }
+    .used {
+      color: #c0392b;
+    }
+    .content {
+      font-size: 16px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .thanks {
+      font-size: 18px;
+      color: #c0392b;
+      margin-top: 15px;
+      display: none;
+    }
+    button {
+      background: linear-gradient(90deg, #c0392b, #e74c3c);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #bbb;
+      cursor: default;
+    }
+    .footer {
+      font-size: 14px;
+      color: #555;
+      margin-top: 22px;
+    }
+    .snow {
+      position: fixed;
+      top: -10px;
+      color: white;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ticket">
+    <h1>🎀 シールいっぱい買う権 🎀</h1>
+
+    <div class="date">🎄 2025 / 12 / 25 🎄</div>
+
+    <div id="status" class="status unused">● 未使用</div>
+
+    <div class="content">
+      このチケットを使うと、<br>
+      <strong>好きなシールを、好きなだけ買えます。</strong><br><br>
+      クリスマス気分で、<br>
+      ゆっくり一緒に選ぼうね 🎁
+    </div>
+
+    <div id="thanksMessage" class="thanks">
+      いつも可愛いものを教えてくれてありがとう💖<br>
+      メリークリスマス 🎄
+    </div>
+
+    <button id="useButton">このチケットを使う</button>
+
+    <div class="footer">
+      有効期限：なし<br>
+      使用回数：1回<br><br>
+      from ○○
+    </div>
+  </div>
+
+  <script>
+    const status = document.getElementById("status");
+    const button = document.getElementById("useButton");
+    const thanks = document.getElementById("thanksMessage");
+
+    const isUsed = localStorage.getItem("sticker_ticket_used");
+
+    if (isUsed === "true") {
+      markUsed();
+    }
+
+    button.addEventListener("click", () => {
+      if (confirm("このチケットを使用済みにしますか？")) {
+        localStorage.setItem("sticker_ticket_used", "true");
+        markUsed();
+      }
+    });
+
+    function markUsed() {
+      status.textContent = "● 使用済み";
+      status.classList.remove("unused");
+      status.classList.add("used");
+      button.disabled = true;
+      button.textContent = "使用済みです";
+      thanks.style.display = "block";
+    }
+
+    // 雪エフェクト
+    for (let i = 0; i < 20; i++) {
+      const snow = document.createElement("div");
+      snow.className = "snow";
+      snow.textContent = "❄";
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.animationDuration = 5 + Math.random() * 5 + "s";
+      snow.style.fontSize = 12 + Math.random() * 14 + "px";
+      document.body.appendChild(snow);
+    }
+  </script>
+
+</body>
+</html>
